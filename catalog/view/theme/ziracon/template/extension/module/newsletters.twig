@@ -1,0 +1,79 @@
+<script>
+		function subscribe()
+		{
+			var emailpattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+			var email = $('#txtemail').val();
+			if(email != "")
+			{
+				if(!emailpattern.test(email))
+				{
+					$('.text-danger').remove();
+					var str = '<span class="error">Invalid Email</span>';
+					$('.form-group').after('<div class="text-danger">Invalid Email</div>');
+
+					return false;
+				}
+				else
+				{
+					$.ajax({
+						url: 'index.php?route=extension/module/newsletters/news',
+						type: 'post',
+						data: 'email=' + $('#txtemail').val(),
+						dataType: 'json',
+						
+									
+						success: function(json) {
+						
+						$('.text-danger').remove();
+						$('.form-group').after('<div class="text-success">' + json.message + '</div>');
+						
+						}
+						
+					});
+					return false;
+				}
+			}
+			else
+			{
+				$('.text-danger').remove();
+				$('.input-news').after('<div class="text-danger">Email Is Require</div>');
+				$(email).focus();
+
+				return false;
+			}
+			
+
+		}
+</script>
+
+{{ content_middle }}
+	
+	
+
+<div class="newsletter box column">	
+	<!-- <div class="container">
+		<div class="row"> -->	
+		<div class="newsletter-details">
+			<div class="newsletter-desc">
+				<h5 class="newsletter-title">{{ newsletter_title }}</h5>
+				<!--<span class="newsletter-info">{{newsletter_info}}</span>-->
+				<div class="desc">{{ newsletter_desc }}</div>
+			</div>
+		
+			<div class="newsletter-block">
+				<form method="post">
+					<div class="form-group required">
+						<label class="col-sm-2 control-label" for="txtemail">{{ entry_email }}</label>
+						<div class="input-news">
+							<input type="email" name="txtemail" id="txtemail" value="" placeholder="{{ entry_email }}" class="form-control input-lg"  /> 
+						</div>			
+						<div class="subscribe-btn">
+							<button type="submit" class="btn btn-default btn-lg" onclick="return subscribe();">{{ email_button }}</button>  					
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	<!-- </div>
+	</div> -->
+</div>

@@ -1,0 +1,45 @@
+<div id="pstcategorylist" class="pstcategorylist box">
+   <div class="box-heading">{{ categorylist_title }}</div>
+   <div class="box-content">
+      <div class="categorylist-inner">
+         <ul class="{% if  slider == 1 %}pstcategorylist-carousel{% else %} category-grid {% endif %}">
+            {% for row in categories|batch(1, 'No item') %}
+            <div class="{% if slider == 1 %}category_item{% else %} category_item {% endif %}">
+               {% for category in row %}
+               <li class="item">
+                  <div class="categoryblock">
+                     <div class="image">
+                        <a href="{{ category.href }}"><img src="{{ category.thumb }}" alt="{{ category.name }}" title="{{ category.name }}" class="img-responsive" /></a>
+                     </div>
+                     <div class="categorylist">
+                        <div class="cat-details-inner">
+                           <div class="cat-title"><a href="{{ category.href }}">{{ category.name }}</a></div>
+						   <span class="viewmore">
+						   <a href="{{ category.href }}">{{ categorylist_shopnow }}</a>
+						   </span>
+						   <!--  {% if category.children %}
+							  <ul id="subcategory">
+							  {% for child in category.children|slice(0, 4)%}
+								<li class="child-item">
+									<a href="{{ child.href }}">{{ child.name }}</a>
+								</li>
+							  {% endfor %}
+							  {% set childCount = category.children|length %}
+							  {% if childCount >= 3 %}
+								 <li class="viewmore">
+								 <a href="{{ child.href }}">View more</a>
+								 </li>
+							  {% endif %}
+							  </ul>
+							  {% endif %}-->
+               			</div>
+              		 </div>
+               	  </div>
+               </li>
+               {% endfor %}
+            </div>
+            {% endfor %}
+         </ul>
+      </div>
+   </div>
+</div>
